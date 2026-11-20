@@ -1,0 +1,148 @@
+/* ==================== MA'AMAKIM THEME TOKENS (DARK DEFAULT & LIGHT) ==================== */
+:root {
+  color-scheme: dark;
+  --background: #09131c;
+  --sidebar: #0d1a26;
+  --card: #10202e;
+  --border: #1e3447;
+  --foreground: #eaf3f9;
+  --muted-foreground: #8fa9be;
+  --primary: #14b8a6;
+  --primary-foreground: #042420;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --link: #38bdf8;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #f4f8fb;
+  --sidebar: #e9f1f7;
+  --card: #ffffff;
+  --border: #d0dfe9;
+  --foreground: #0f2130;
+  --muted-foreground: #4f697d;
+  --primary: #0d9488;
+  --primary-foreground: #ffffff;
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+  --link: #0284c7;
+}
+
+body {
+  font-family: 'Heebo', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .tab-btn {
+      position: relative;
+      transition: color 0.18s ease, background-color 0.18s ease;
+    }
+    .tab-btn[aria-selected="true"] {
+      color: var(--foreground);
+      background-color: var(--card);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .mnav-btn {
+      transition: color 0.18s ease, background-color 0.18s ease;
+      color: var(--muted-foreground);
+    }
+    .mnav-btn[aria-selected="true"] {
+      color: var(--primary);
+      background-color: color-mix(in srgb, var(--primary) 12%, transparent);
+    }
+    .mobile-bottom-nav {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .region-pin {
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .region-pin:hover {
+      transform: scale(1.12);
+    }
+    .region-pin.active circle.pin-ring {
+      stroke-width: 2.5;
+      opacity: 1;
+    }
+    .status-pill-go {
+      background-color: color-mix(in srgb, var(--success) 16%, transparent);
+      color: var(--success);
+      border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+    }
+    .status-pill-caution {
+      background-color: color-mix(in srgb, var(--warning) 16%, transparent);
+      color: var(--warning);
+      border: 1px solid color-mix(in srgb, var(--warning) 35%, transparent);
+    }
+    .status-pill-nogo {
+      background-color: color-mix(in srgb, var(--error) 16%, transparent);
+      color: var(--error);
+      border: 1px solid color-mix(in srgb, var(--error) 35%, transparent);
+    }
+    .card-surface {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+    .card-interactive:hover {
+      border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+    }
+    .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.58);
+      backdrop-filter: blur(4px);
+    }
+    input, select, textarea {
+      background-color: var(--background);
+      color: var(--foreground);
+      border: 1px solid var(--border);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
+      outline-offset: 1px;
+      border-color: var(--primary);
+    }
+    .vis-bar-track {
+      background: linear-gradient(to left,
+        color-mix(in srgb, var(--error) 45%, transparent) 0%,
+        color-mix(in srgb, var(--warning) 50%, transparent) 38%,
+        color-mix(in srgb, var(--success) 65%, transparent) 72%,
+        color-mix(in srgb, var(--primary) 75%, transparent) 100%
+      );
+    }
+    [dir="ltr"] .vis-bar-track {
+      background: linear-gradient(to right,
+        color-mix(in srgb, var(--error) 45%, transparent) 0%,
+        color-mix(in srgb, var(--warning) 50%, transparent) 38%,
+        color-mix(in srgb, var(--success) 65%, transparent) 72%,
+        color-mix(in srgb, var(--primary) 75%, transparent) 100%
+      );
+    }
+    [dir="ltr"] table.dir-table {
+      text-align: left;
+    }
+    [dir="rtl"] table.dir-table {
+      text-align: right;
+    }
+    #forecast-canvas {
+      touch-action: pan-y;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: var(--border);
+      border-radius: 9999px;
+    }

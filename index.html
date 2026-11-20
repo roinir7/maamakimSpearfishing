@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="מעמקים" />
+  <title>מעמקים — תחזית ים, ראות ודיווחים לדייג בצלילה חופשית בישראל</title>
+  <meta name="description" content="אתר המרכז נתוני גלים, רוח, טמפרטורת מים, מדד ראות מתחת למים, דיווחים בלייב ויומן תפיסות לצוללים חופשיים ודייגי צלילה בישראל." />
+  <meta name="theme-color" content="#09131c" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="antialiased text-sm">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-3">
+      <!-- Brand -->
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--primary) 15%, transparent); color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 12c2.2-2.2 4.8-2.2 7 0s4.8 2.2 7 0 4.2-2.2 6 0"/>
+            <path d="M2 17c2.2-2.2 4.8-2.2 7 0s4.8 2.2 7 0 4.2-2.2 6 0"/>
+            <path d="M12 3v6"/>
+            <path d="M9.5 6.5 12 4l2.5 2.5"/>
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h1 data-i18n="brand_name" class="text-sm sm:text-base font-bold tracking-tight text-[var(--foreground)] truncate">מעמקים</h1>
+            <span data-i18n="brand_badge" class="hidden sm:inline-block text-xs px-2 py-0.5 rounded-md bg-[var(--card)] border border-[var(--border)] text-[var(--muted-foreground)]">ישראל · צלילה חופשית</span>
+          </div>
+          <p data-i18n="brand_tagline" class="hidden sm:block text-xs text-[var(--muted-foreground)] truncate">גלים, ראות תת-ימית, דיווחים בלייב ותפיסות</p>
+        </div>
+      </div>
+
+      <!-- Primary Navigation Tabs (Desktop) -->
+      <nav aria-label="ניווט ראשי" class="hidden lg:flex items-center gap-1 p-1 rounded-lg bg-[var(--sidebar)] border border-[var(--border)]">
+        <button id="tab-overview" role="tab" aria-selected="true" onclick="switchTab('overview')" class="tab-btn px-3 py-1.5 rounded-md text-xs font-medium text-[var(--muted-foreground)]">
+          <span data-i18n="nav_overview">מפה ותחזית ים</span>
+        </button>
+        <button id="tab-reports" role="tab" aria-selected="false" onclick="switchTab('reports')" class="tab-btn px-3 py-1.5 rounded-md text-xs font-medium text-[var(--muted-foreground)] flex items-center gap-1.5">
+          <span data-i18n="nav_reports">דיווחים בלייב</span>
+          <span id="nav-reports-count" class="px-1.5 py-0.2 rounded-full text-xs bg-[var(--background)] border border-[var(--border)] tabular-nums">6</span>
+        </button>
+        <button id="tab-catches" role="tab" aria-selected="false" onclick="switchTab('catches')" class="tab-btn px-3 py-1.5 rounded-md text-xs font-medium text-[var(--muted-foreground)] flex items-center gap-1.5">
+          <span data-i18n="nav_catches">יומן תפיסות</span>
+          <span id="nav-catches-count" class="px-1.5 py-0.2 rounded-full text-xs bg-[var(--background)] border border-[var(--border)] tabular-nums">6</span>
+        </button>
+        <button id="tab-safety" role="tab" aria-selected="false" onclick="switchTab('safety')" class="tab-btn px-3 py-1.5 rounded-md text-xs font-medium text-[var(--muted-foreground)] flex items-center gap-1.5">
+          <span data-i18n="nav_safety">בטיחות ורישיון</span>
+          <span id="nav-safety-count" class="px-1.5 py-0.2 rounded-full text-xs font-semibold tabular-nums status-pill-nogo">5</span>
+        </button>
+        <button id="tab-fish" role="tab" aria-selected="false" onclick="switchTab('fish')" class="tab-btn px-3 py-1.5 rounded-md text-xs font-medium text-[var(--muted-foreground)] flex items-center gap-1.5">
+          <span data-i18n="nav_fish">מגדיר דגים</span>
+          <span data-i18n="nav_fish_badge" class="px-1.5 py-0.2 rounded-full text-xs font-semibold status-pill-nogo">חפאש</span>
+        </button>
+      </nav>
+
+      <!-- Actions + Language Switcher (עב / EN) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- Theme Toggle -->
+        <button id="btn-theme-toggle" type="button" onclick="toggleTheme()" class="w-8 h-8 rounded-lg bg-[var(--sidebar)] border border-[var(--border)] flex items-center justify-center text-xs hover:border-[var(--primary)] transition-colors shrink-0" title="החלף מצב בהיר / כהה">☀️</button>
+
+        <!-- Language Toggle Pill -->
+        <div id="lang-switcher" class="flex items-center p-0.5 rounded-lg bg-[var(--sidebar)] border border-[var(--border)] shrink-0" role="group" aria-label="Language / שפה">
+          <button id="lang-btn-he" type="button" onclick="setLanguage('he')" class="px-2 py-1 rounded-md text-xs font-semibold transition-colors" aria-pressed="true">עב</button>
+          <button id="lang-btn-en" type="button" onclick="setLanguage('en')" class="px-2 py-1 rounded-md text-xs font-semibold transition-colors" aria-pressed="false">EN</button>
+        </div>
+
+        <button id="btn-open-report" onclick="openModal('report-modal')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors flex items-center gap-1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          <span data-i18n="btn_report_full" class="hidden sm:inline">דיווח מהמים</span>
+          <span data-i18n="btn_report_short" class="sm:hidden">דיווח</span>
+        </button>
+        <button id="btn-open-catch" onclick="openModal('catch-modal')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-90 flex items-center gap-1" style="background-color: var(--primary); color: var(--primary-foreground);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span data-i18n="btn_catch_full" class="hidden sm:inline">העלאת תפיסה</span>
+          <span data-i18n="btn_catch_short" class="sm:hidden">תפיסה</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Live Data Status Bar -->
+  <div class="border-b border-[var(--border)] bg-[var(--sidebar)]">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[var(--muted-foreground)]">
+        <span class="flex items-center gap-1.5">
+          <span id="data-source-dot" class="w-2 h-2 rounded-full" style="background-color: var(--success);"></span>
+          <span id="data-source-label">מתחבר ל-Open-Meteo Marine...</span>
+        </span>
+        <span class="hidden sm:inline">·</span>
+        <span id="sun-window" data-i18n="sun_window" class="hidden sm:inline">זריחה 06:12 · שקיעה 16:41 · חלון צלילה מיטבי: 06:15–09:45</span>
+      </div>
+      <button id="btn-refresh-marine" onclick="fetchAllMarineData(true)" class="text-xs font-medium flex items-center gap-1.5 text-[var(--link)] hover:underline">
+        <svg id="refresh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+        <span data-i18n="btn_refresh_marine">רענן נתוני ים</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content (extra bottom padding on mobile/tablet for fixed bottom nav bar) -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5 pb-24 lg:pb-8 space-y-5 sm:space-y-6">
+
+    <!-- Quick Region Selector Bar -->
+    <section aria-label="בחירת אזור צלילה">
+      <div id="region-strip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ==================== TAB 1: OVERVIEW (MAP + FORECAST + VISIBILITY) ==================== -->
+    <div id="view-overview" class="space-y-5">
+
+      <!-- Homepage Safety & Fishing License Reminder Banner -->
+      <section aria-label="תזכורת בטיחות ורישיון דיג" class="card-surface rounded-xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background-color: color-mix(in srgb, var(--warning) 15%, transparent); color: var(--warning); border: 1px solid color-mix(in srgb, var(--warning) 32%, transparent);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M12 8v4"/>
+              <path d="M12 16h.01"/>
+            </svg>
+          </div>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 data-i18n="banner_title" class="text-xs sm:text-sm font-semibold text-[var(--foreground)]">לפני שנכנסים למים — בטיחות, רישיון דיג ושמורות ימיות</h2>
+              <span id="banner-incidents-pill" class="text-xs font-medium px-2 py-0.5 rounded-full status-pill-nogo">5 התראות בטיחות פעילות</span>
+            </div>
+            <p data-i18n-html="banner_desc" class="text-xs text-[var(--muted-foreground)] leading-relaxed">
+              דייג ברובה בצלילה חופשית מחייב <strong class="text-[var(--foreground)] font-medium">רישיון דיג אישי ספורטיבי בתוקף</strong>, צלילה עם בן זוג ומצוף סימון, והקפדה על איסור דייג בשמורות טבע ימיות (מכסה יומית: עד 5 ק״ג או 2 דגים) ואיסור מוחלט על דייג <strong class="font-semibold" style="color: var(--error);">חפאש (דקר אלכסנדרוני)</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <a href="https://www.gov.il/he/service/application-issuance-or-renewal-fishing-license-new" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors inline-flex items-center gap-1.5">
+            <span data-i18n="banner_btn_license">הנפקת / חידוש רישיון דיג</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a href="https://www.parks.org.il/sea/%D7%93%D7%92%D7%99%D7%9D-%D7%97%D7%9B%D7%9D-%D7%A9%D7%95%D7%9E%D7%A8%D7%99%D7%9D-%D7%A2%D7%9C-%D7%94%D7%99%D7%9D/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors inline-flex items-center gap-1.5">
+            <span data-i18n="banner_btn_inpa">רשות הטבע והגנים (תקנות)</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <button data-i18n="banner_btn_fish" onclick="switchTab('fish')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors status-pill-nogo hover:opacity-90">
+            מגדיר דגים וזיהוי חפאש ←
+          </button>
+          <button data-i18n="banner_btn_sizes" onclick="jumpToMinSizes()" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors">
+            טבלת אורכי מינימום
+          </button>
+          <button data-i18n="banner_btn_safety" onclick="switchTab('safety')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors status-pill-caution hover:opacity-90">
+            לוח תקריות בטיחות ←
+          </button>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+        <!-- Right Column (RTL first): Interactive Israel Coastline Map -->
+        <aside class="lg:col-span-4 card-surface rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 data-i18n="map_title" class="text-sm font-semibold text-[var(--foreground)]">מפת חופי ישראל — Go / No-Go</h2>
+              <p data-i18n="map_subtitle" class="text-xs text-[var(--muted-foreground)]">בחר אזור לבחינת גלים, ראות וריפים</p>
+            </div>
+            <span data-i18n="map_regions_count" class="text-xs text-[var(--muted-foreground)] tabular-nums">6 אזורים</span>
+          </div>
+
+          <!-- Interactive SVG Map of Israel Coastline -->
+          <div class="relative rounded-lg border border-[var(--border)] overflow-hidden" style="background-color: color-mix(in srgb, var(--primary) 6%, var(--background));">
+            <svg id="israel-map" viewBox="0 0 320 470" class="w-full h-auto block select-none" role="img" aria-label="מפת אזורי הצלילה בחופי ישראל">
+              <!-- Bathymetry depth contours (Mediterranean) -->
+              <path d="M 188 18 C 165 65, 148 115, 134 165 C 122 208, 108 248, 86 286 L 0 286 L 0 18 Z" fill="var(--primary)" fill-opacity="0.05"/>
+              <path d="M 160 18 C 138 65, 122 115, 108 165 C 96 208, 82 248, 60 286 L 0 286 L 0 18 Z" fill="var(--primary)" fill-opacity="0.06"/>
+              <path d="M 125 18 C 105 68, 90 120, 76 170 C 64 212, 48 250, 26 286 L 0 286 L 0 18 Z" fill="var(--primary)" fill-opacity="0.06"/>
+
+              <!-- Subtle Depth Labels -->
+              <text data-i18n="svg_med" x="26" y="88" font-size="10" fill="var(--muted-foreground)" opacity="0.65">הים התיכון</text>
+              <text data-i18n="svg_shelf" x="24" y="103" font-size="9" fill="var(--muted-foreground)" opacity="0.45">מדף יבשת · 5–25 מ'</text>
+
+              <!-- Landmass Silhouette (Israel simplified coastline) -->
+              <path d="
+                M 204 22
+                L 280 22
+                L 292 85
+                L 286 175
+                L 276 250
+                L 255 325
+                L 204 422
+                L 192 424
+                L 168 352
+                L 132 308
+                L 98 282
+                C 116 252, 132 214, 146 172
+                C 158 134, 170 98, 180 76
+                C 171 78, 166 72, 174 64
+                C 186 52, 196 38, 204 22 Z"
+                fill="var(--card)" stroke="var(--border)" stroke-width="1.6" stroke-linejoin="round"/>
+
+              <!-- Sea of Galilee (Kinneret) reference -->
+              <ellipse cx="255" cy="70" rx="7" ry="12" fill="var(--primary)" fill-opacity="0.18" stroke="var(--border)" stroke-width="1"/>
+              <!-- Dead Sea reference -->
+              <path d="M 250 225 C 258 232, 258 265, 250 278 C 242 268, 242 238, 250 225 Z" fill="var(--primary)" fill-opacity="0.16" stroke="var(--border)" stroke-width="1"/>
+
+              <!-- Gulf of Eilat / Red Sea -->
+              <path d="M 192 424 L 204 422 L 194 468 L 166 468 Z" fill="var(--primary)" fill-opacity="0.22" stroke="var(--border)" stroke-width="1"/>
+              <text data-i18n="svg_eilat" x="115" y="452" font-size="10" fill="var(--muted-foreground)" opacity="0.75">מפרץ אילת</text>
+
+              <!-- Compass Rose -->
+              <g transform="translate(46, 388)" opacity="0.7">
+                <circle cx="0" cy="0" r="18" fill="var(--card)" stroke="var(--border)" stroke-width="1"/>
+                <path d="M 0 -13 L 3.5 0 L 0 -3 L -3.5 0 Z" fill="var(--primary)"/>
+                <path d="M 0 13 L 3.5 0 L 0 3 L -3.5 0 Z" fill="var(--muted-foreground)" opacity="0.45"/>
+                <text data-i18n="svg_north" x="0" y="-21" text-anchor="middle" font-size="9" font-weight="600" fill="var(--muted-foreground)">צ'</text>
+              </g>
+
+              <!-- Region Pins injected by JS -->
+              <g id="map-pins-layer"></g>
+            </svg>
+          </div>
+
+          <!-- Legend -->
+          <div class="flex items-center justify-between gap-2 pt-1 text-xs text-[var(--muted-foreground)]">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background-color: var(--success);"></span><span data-i18n="legend_go">מומלץ (Go)</span></span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background-color: var(--warning);"></span><span data-i18n="legend_caution">גבולי</span></span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background-color: var(--error);"></span><span data-i18n="legend_nogo">לא מומלץ</span></span>
+          </div>
+        </aside>
+
+        <!-- Left Column (RTL second): Detailed Marine & Visibility Dashboard for Selected Region -->
+        <div class="lg:col-span-8 space-y-5">
+
+          <!-- Selected Region Hero Card -->
+          <section class="card-surface rounded-xl p-4 sm:p-5 space-y-5">
+            <div class="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border)] pb-4">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <h2 id="detail-region-name" class="text-lg font-bold text-[var(--foreground)]">—</h2>
+                  <span id="detail-status-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full">—</span>
+                </div>
+                <p id="detail-region-subtitle" class="text-xs text-[var(--muted-foreground)]">—</p>
+              </div>
+
+              <!-- Suitability Score Gauge -->
+              <div class="flex items-center gap-3 px-3.5 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)]">
+                <div>
+                  <div data-i18n="score_label" class="text-xs text-[var(--muted-foreground)]">ציון צלילה חופשית</div>
+                  <div id="detail-score-reason" class="text-xs font-medium text-[var(--foreground)]">—</div>
+                </div>
+                <div class="text-2xl font-bold tabular-nums" id="detail-score-num">—</div>
+              </div>
+            </div>
+
+            <!-- Eilat / Reserve Notice (conditional) -->
+            <div id="detail-regulation-alert" class="hidden rounded-lg px-3.5 py-2.5 text-xs flex items-start gap-2.5" style="background-color: color-mix(in srgb, var(--warning) 12%, transparent); border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent); color: var(--foreground);">
+              <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span id="detail-regulation-text"></span>
+            </div>
+
+            <!-- Active Regional Safety Incident Alert (conditional) -->
+            <div id="detail-safety-alert" class="hidden rounded-lg px-3.5 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2.5" style="background-color: color-mix(in srgb, var(--error) 10%, transparent); border: 1px solid color-mix(in srgb, var(--error) 30%, transparent); color: var(--foreground);">
+              <div class="flex items-start gap-2.5 min-w-0 flex-1">
+                <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div id="detail-safety-text" class="leading-relaxed"></div>
+              </div>
+              <button data-i18n="safety_alert_more" onclick="openSafetyForSelectedRegion()" class="shrink-0 text-xs font-semibold underline" style="color: var(--error);">לפרטי התקרית ←</button>
+            </div>
+
+            <!-- Weather & Sea Suitability Color Scale (מתאים / גבולי / לא מתאים) -->
+            <div class="rounded-lg p-3.5 bg-[var(--background)] border border-[var(--border)] space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span data-i18n="suitability_title" class="font-semibold text-[var(--foreground)]">סרגל התאמת מזג אוויר וים לצלילה</span>
+                <span id="suitability-bar-summary" class="text-[var(--muted-foreground)] tabular-nums">—</span>
+              </div>
+
+              <!-- 3-Zone Segmented Color Bar -->
+              <div class="relative pt-1">
+                <div class="h-3.5 rounded-full overflow-hidden flex border border-[var(--border)]">
+                  <div class="h-full flex items-center justify-center text-[10px] font-semibold" style="width: 48%; background-color: color-mix(in srgb, var(--error) 62%, transparent);"></div>
+                  <div class="h-full flex items-center justify-center text-[10px] font-semibold border-x border-[var(--background)]/40" style="width: 26%; background-color: color-mix(in srgb, var(--warning) 65%, transparent);"></div>
+                  <div class="h-full flex items-center justify-center text-[10px] font-semibold" style="width: 26%; background-color: color-mix(in srgb, var(--success) 68%, transparent);"></div>
+                </div>
+                <!-- Live Score Position Marker -->
+                <div id="suitability-marker" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 shadow-md transition-all duration-300 flex items-center justify-center" style="background-color: var(--foreground); border-color: var(--background); right: 50%; margin-top: 2px;">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background-color: var(--background);"></span>
+                </div>
+              </div>
+
+              <!-- 3-Zone Threshold Legend -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-0.5 text-xs">
+                <div id="zone-card-nogo" class="rounded-md px-2.5 py-1.5 border border-[var(--border)] bg-[var(--card)] flex items-start gap-2 transition-all">
+                  <span class="w-2.5 h-2.5 rounded-full shrink-0 mt-1" style="background-color: var(--error);"></span>
+                  <div>
+                    <div data-i18n="zone_nogo_title" class="font-semibold text-[var(--foreground)]">לא מתאים (0–47)</div>
+                    <div data-i18n="zone_nogo_desc" class="text-[var(--muted-foreground)]">גל ≥ 0.9 מ׳ · רוח 22+ · ראות &lt; 4 מ׳</div>
+                  </div>
+                </div>
+                <div id="zone-card-caution" class="rounded-md px-2.5 py-1.5 border border-[var(--border)] bg-[var(--card)] flex items-start gap-2 transition-all">
+                  <span class="w-2.5 h-2.5 rounded-full shrink-0 mt-1" style="background-color: var(--warning);"></span>
+                  <div>
+                    <div data-i18n="zone_caution_title" class="font-semibold text-[var(--foreground)]">גבולי / זהירות (48–73)</div>
+                    <div data-i18n="zone_caution_desc" class="text-[var(--muted-foreground)]">גל 0.55–0.9 מ׳ · רוח 15–22 · ראות 4–7 מ׳</div>
+                  </div>
+                </div>
+                <div id="zone-card-go" class="rounded-md px-2.5 py-1.5 border border-[var(--border)] bg-[var(--card)] flex items-start gap-2 transition-all">
+                  <span class="w-2.5 h-2.5 rounded-full shrink-0 mt-1" style="background-color: var(--success);"></span>
+                  <div>
+                    <div data-i18n="zone_go_title" class="font-semibold text-[var(--foreground)]">מתאים לצלילה (74–100)</div>
+                    <div data-i18n="zone_go_desc" class="text-[var(--muted-foreground)]">גל ≤ 0.55 מ׳ · רוח &lt; 15 · ראות 7.5+ מ׳</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Marine KPIs -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+              <div class="rounded-lg p-3 bg-[var(--background)] border border-[var(--border)] space-y-1">
+                <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+                  <span data-i18n="kpi_wave">גובה גל</span>
+                  <span id="kpi-wave-dir" class="font-medium">—</span>
+                </div>
+                <div id="kpi-wave-height" class="text-xl font-bold tabular-nums text-[var(--foreground)]">—</div>
+                <div id="kpi-swell-period" class="text-xs text-[var(--muted-foreground)]">סוואל: —</div>
+              </div>
+
+              <div class="rounded-lg p-3 bg-[var(--background)] border border-[var(--border)] space-y-1">
+                <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+                  <span data-i18n="kpi_wind">רוח</span>
+                  <span id="kpi-wind-type" class="font-medium">—</span>
+                </div>
+                <div id="kpi-wind-speed" class="text-xl font-bold tabular-nums text-[var(--foreground)]">—</div>
+                <div id="kpi-wind-dir" class="text-xs text-[var(--muted-foreground)]">כיוון: —</div>
+              </div>
+
+              <div class="rounded-lg p-3 bg-[var(--background)] border border-[var(--border)] space-y-1">
+                <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+                  <span data-i18n="kpi_temp">טמפ' מים</span>
+                  <span data-i18n="kpi_surface">פני הים</span>
+                </div>
+                <div id="kpi-water-temp" class="text-xl font-bold tabular-nums text-[var(--foreground)]">—</div>
+                <div id="kpi-wetsuit" class="text-xs text-[var(--muted-foreground)]">חליפה: —</div>
+              </div>
+
+              <div class="rounded-lg p-3 bg-[var(--background)] border border-[var(--border)] space-y-1">
+                <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+                  <span data-i18n="kpi_jelly">מצב מדוזות</span>
+                  <span data-i18n="kpi_community">קהילה</span>
+                </div>
+                <div id="kpi-jellyfish" class="text-base font-bold text-[var(--foreground)] pt-0.5">—</div>
+                <div id="kpi-current" class="text-xs text-[var(--muted-foreground)]">זרם: —</div>
+              </div>
+            </div>
+
+            <!-- Underwater Visibility Meter -->
+            <div class="rounded-lg p-4 bg-[var(--background)] border border-[var(--border)] space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 data-i18n="vis_title" class="text-sm font-semibold text-[var(--foreground)]">מדד ראות מתחת למים</h3>
+                  <p id="vis-breakdown-text" data-i18n="vis_subtitle" class="text-xs text-[var(--muted-foreground)]">משלב מודל גלים/רוח + דיווחים אחרונים מהמים</p>
+                </div>
+                <div>
+                  <span id="vis-estimate-val" class="text-lg font-bold tabular-nums text-[var(--foreground)]">—</span>
+                  <span id="vis-quality-label" class="mx-1.5 text-xs font-medium text-[var(--muted-foreground)]">—</span>
+                </div>
+              </div>
+
+              <!-- Visual Meter Bar -->
+              <div class="space-y-1.5">
+                <div class="relative h-3 rounded-full vis-bar-track overflow-visible">
+                  <div id="vis-marker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 shadow-sm transition-all duration-300" style="background-color: var(--foreground); border-color: var(--background); right: 50%;"></div>
+                </div>
+                <div class="flex justify-between text-xs text-[var(--muted-foreground)] tabular-nums">
+                  <span data-i18n="vis_scale_0">0 מ' (עכור)</span>
+                  <span data-i18n="vis_scale_5">5 מ'</span>
+                  <span data-i18n="vis_scale_10">10 מ'</span>
+                  <span data-i18n="vis_scale_15">15 מ'</span>
+                  <span data-i18n="vis_scale_20">20 מ' (צלול)</span>
+                </div>
+              </div>
+
+              <!-- Model vs Community Split -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+                <div class="flex items-center justify-between px-3 py-1.5 rounded-md bg-[var(--card)] border border-[var(--border)]">
+                  <span data-i18n="vis_model_label" class="text-[var(--muted-foreground)]">הערכת מודל ים</span>
+                  <span id="vis-model-val" class="font-semibold tabular-nums">—</span>
+                </div>
+                <div class="flex items-center justify-between px-3 py-1.5 rounded-md bg-[var(--card)] border border-[var(--border)]">
+                  <span data-i18n="vis_comm_label" class="text-[var(--muted-foreground)]">ממוצע דיווחי צוללים</span>
+                  <span id="vis-community-val" class="font-semibold tabular-nums">—</span>
+                </div>
+                <div class="flex items-center justify-between px-3 py-1.5 rounded-md bg-[var(--card)] border border-[var(--border)]">
+                  <span data-i18n="vis_bottom_label" class="text-[var(--muted-foreground)]">סוג קרקעית</span>
+                  <span id="vis-bottom-type" class="font-semibold">—</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 48-Hour Interactive Forecast Chart -->
+          <section class="card-surface rounded-xl p-4 sm:p-5 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 data-i18n="chart_title" class="text-sm font-semibold text-[var(--foreground)]">תחזית ל-48 שעות קדימה</h3>
+                <p id="chart-subtitle" data-i18n="chart_subtitle" class="text-xs text-[var(--muted-foreground)]">העבר סמן או החלק באצבע על הגרף לבדיקת שעת כניסה אידיאלית</p>
+              </div>
+              <div class="flex items-center gap-1 p-1 rounded-lg bg-[var(--background)] border border-[var(--border)] text-xs">
+                <button id="chart-mode-waves" data-i18n="chart_mode_waves" onclick="setChartMode('waves')" class="px-2.5 py-1 rounded-md font-medium transition-colors" style="background-color: var(--card); color: var(--foreground);">גלים וראות</button>
+                <button id="chart-mode-wind" data-i18n="chart_mode_wind" onclick="setChartMode('wind')" class="px-2.5 py-1 rounded-md font-medium text-[var(--muted-foreground)] transition-colors">רוח וסוואל</button>
+              </div>
+            </div>
+
+            <div class="relative w-full h-56">
+              <canvas id="forecast-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+              <div id="chart-tooltip" class="hidden pointer-events-none absolute z-10 px-3 py-2 rounded-lg text-xs shadow-lg border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] space-y-0.5 min-w-[155px]"></div>
+            </div>
+
+            <!-- 24-Hour Color-Coded Weather Suitability Strip -->
+            <div class="pt-2 border-t border-[var(--border)] space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span data-i18n="hourly_strip_title" class="font-medium text-[var(--foreground)]">סרגל התאמה לפי שעות (24 השעות הקרובות)</span>
+                <span id="hourly-strip-detail" class="text-[var(--muted-foreground)] tabular-nums">העבר סמן או לחץ על שעה לפירוט</span>
+              </div>
+              <div id="hourly-color-strip" class="grid grid-cols-12 sm:grid-cols-24 gap-1" style="grid-template-columns: repeat(24, minmax(0, 1fr));"></div>
+              <div id="hourly-strip-labels" class="flex justify-between text-xs text-[var(--muted-foreground)] tabular-nums" dir="ltr"></div>
+            </div>
+          </section>
+
+          <!-- Diving Spots & Recommended Seasonal Fish -->
+          <section class="card-surface rounded-xl p-4 sm:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 data-i18n="spots_title" class="text-sm font-semibold text-[var(--foreground)]">נקודות כניסה וריפים באזור</h3>
+                <p data-i18n="spots_subtitle" class="text-xs text-[var(--muted-foreground)]">עומק עבודה, סוג ריף ודגי מטרה נפוצים בעונה הנוכחית</p>
+              </div>
+              <div id="region-seasonal-fish" class="flex flex-wrap items-center gap-1.5"></div>
+            </div>
+            <div id="region-spots-list" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Mini Preview Strip of Latest Live Reports & Recent Catches -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <section class="card-surface rounded-xl p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-[var(--foreground)]"><span data-i18n="preview_reports_title">דיווחים אחרונים מהמים</span> (<span id="overview-reports-region-label">כל הארץ</span>)</h3>
+            <button data-i18n="preview_reports_all" onclick="switchTab('reports')" class="text-xs font-medium text-[var(--link)] hover:underline">לכל הדיווחים ←</button>
+          </div>
+          <div id="overview-reports-preview" class="space-y-2.5"></div>
+        </section>
+
+        <section class="card-surface rounded-xl p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 data-i18n="preview_catches_title" class="text-sm font-semibold text-[var(--foreground)]">תפיסות אחרונות מהקהילה</h3>
+            <button data-i18n="preview_catches_all" onclick="switchTab('catches')" class="text-xs font-medium text-[var(--link)] hover:underline">ליומן התפיסות ←</button>
+          </div>
+          <div id="overview-catches-preview" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: LIVE FIELD REPORTS ==================== -->
+    <div id="view-reports" class="hidden space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 data-i18n="reports_title" class="text-base font-bold text-[var(--foreground)]">פיד דיווחים בלייב מהמים</h2>
+          <p data-i18n="reports_subtitle" class="text-xs text-[var(--muted-foreground)]">כל דיווח חדש מעדכן אוטומטית את מדד הראות והתאמת הצלילה באזור</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="filter-reports-region" onchange="renderReportsTab()" class="rounded-lg px-3 py-1.5 text-xs">
+            <option value="all">כל האזורים</option>
+          </select>
+          <button data-i18n="reports_add_btn" onclick="openModal('report-modal')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium" style="background-color: var(--primary); color: var(--primary-foreground);">+ הוסף דיווח מהשטח</button>
+        </div>
+      </div>
+
+      <div id="reports-feed-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- ==================== TAB 3: CATCH LOG & UPLOADS ==================== -->
+    <div id="view-catches" class="hidden space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 data-i18n="catches_title" class="text-base font-bold text-[var(--foreground)]">יומן תפיסות הקהילה</h2>
+          <p data-i18n="catches_subtitle" class="text-xs text-[var(--muted-foreground)]">תיעוד תפיסות בצלילה חופשית — סוג דג, משקל, עומק, ציוד ואזור</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="filter-catches-region" onchange="renderCatchesTab()" class="rounded-lg px-3 py-1.5 text-xs">
+            <option value="all">כל האזורים</option>
+          </select>
+          <select id="filter-catches-species" onchange="renderCatchesTab()" class="rounded-lg px-3 py-1.5 text-xs">
+            <option value="all">כל סוגי הדגים</option>
+          </select>
+          <button data-i18n="catches_add_btn" onclick="openModal('catch-modal')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium" style="background-color: var(--primary); color: var(--primary-foreground);">+ העלאת תפיסה</button>
+        </div>
+      </div>
+
+      <div id="catches-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- ==================== TAB 4: SAFETY, INCIDENTS & FISHING LICENSE ==================== -->
+    <div id="view-safety" class="hidden space-y-5">
+      <!-- Top Header -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 data-i18n="safety_title" class="text-base font-bold text-[var(--foreground)]">מרכז בטיחות, תקריות ורישיון דיג</h2>
+          <p data-i18n="safety_subtitle" class="text-xs text-[var(--muted-foreground)]">דיווחי מפגעים ותקריות מהקהילה כדי שנחזור הביתה בשלום, וקישורים רשמיים לרישיון ותקנות רט״ג</p>
+        </div>
+        <button onclick="openModal('safety-modal')" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90 flex items-center gap-1.5" style="background-color: var(--error); color: #ffffff;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span data-i18n="safety_report_btn">דווח על תקרית / מפגע בטיחותי</span>
+        </button>
+      </div>
+
+      <!-- License, INPA Regulations & Emergency Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Official License & INPA Card -->
+        <section class="lg:col-span-7 card-surface rounded-xl p-4 sm:p-5 space-y-4">
+          <div class="space-y-1">
+            <h3 data-i18n="license_title" class="text-sm font-semibold text-[var(--foreground)]">רישיון דיג ותקנות רשות הטבע והגנים</h3>
+            <p data-i18n="license_subtitle" class="text-xs text-[var(--muted-foreground)]">הנפקת וחידוש הרישיון מתבצעים אונליין דרך אגף הדיג במשרד החקלאות; האכיפה, השמורות הימיות וגדלי המינימום מנוהלים על ידי רשות הטבע והגנים.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="https://www.gov.il/he/service/application-issuance-or-renewal-fishing-license-new" target="_blank" rel="noopener noreferrer" class="rounded-lg p-3.5 bg-[var(--background)] border border-[var(--border)] card-interactive space-y-1.5 block">
+              <div class="flex items-center justify-between gap-2 text-xs font-semibold text-[var(--primary)]">
+                <span data-i18n="lic_card1_t">רישיון דיג (gov.il)</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+              <p data-i18n="lic_card1_d" class="text-xs text-[var(--muted-foreground)] leading-relaxed">הוצאה או חידוש מקוון של רישיון דיג אישי ספורטיבי (חובה לרובה צלילה).</p>
+            </a>
+
+            <a href="https://www.parks.org.il/sea/%D7%93%D7%92%D7%99%D7%9D-%D7%97%D7%9B%D7%9D-%D7%A9%D7%95%D7%9E%D7%A8%D7%99%D7%9D-%D7%A2%D7%9C-%D7%94%D7%99%D7%9D/" target="_blank" rel="noopener noreferrer" class="rounded-lg p-3.5 bg-[var(--background)] border border-[var(--border)] card-interactive space-y-1.5 block">
+              <div class="flex items-center justify-between gap-2 text-xs font-semibold text-[var(--primary)]">
+                <span data-i18n="lic_card2_t">דגים חכם · רט״ג</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+              <p data-i18n="lic_card2_d" class="text-xs text-[var(--muted-foreground)] leading-relaxed">חוברת המידע המלאה לדייג, עונות רבייה, אורכי מינימום ומינים מוגנים.</p>
+            </a>
+
+            <a href="https://www.parks.org.il/article/%D7%A9%D7%9E%D7%95%D7%A8%D7%95%D7%AA-%D7%98%D7%91%D7%A2-%D7%99%D7%9E%D7%99%D7%95%D7%AA/" target="_blank" rel="noopener noreferrer" class="rounded-lg p-3.5 bg-[var(--background)] border border-[var(--border)] card-interactive space-y-1.5 block">
+              <div class="flex items-center justify-between gap-2 text-xs font-semibold text-[var(--primary)]">
+                <span data-i18n="lic_card3_t">שמורות ימיות · רט״ג</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+              <p data-i18n="lic_card3_d" class="text-xs text-[var(--muted-foreground)] leading-relaxed">רשימת ומפות השמורות המוכרזות (אכזיב, שקמונה, דור-הבונים, גדור, אילת ועוד).</p>
+            </a>
+          </div>
+
+          <!-- Core Legal & Safety Checklist -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[var(--muted-foreground)] pt-1">
+            <div class="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--background)] border border-[var(--border)]">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: var(--success);"></span>
+              <span data-i18n="rule_1">דייג ברובה מותר רק בצלילה חופשית (ללא מכשיר נשימה) ובים התיכון בלבד.</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--background)] border border-[var(--border)]">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: var(--success);"></span>
+              <span data-i18n="rule_2">מכסה יומית: עד 5 ק״ג שלל, או עד 2 דגים גדולים (גם מעל 5 ק״ג).</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--background)] border border-[var(--border)]">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: var(--warning);"></span>
+              <span data-i18n="rule_3">חובת מצוף סימון בולט + צלילה בשיטת בן זוג (One Up, One Down).</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--background)] border border-[var(--border)]">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: var(--error);"></span>
+              <span data-i18n="rule_4">פריקת רובה מחוץ למים וליד חופי רחצה; לעולם לא לנשום יתר (Hyperventilation).</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Emergency & Quick Contacts Card (Tappable tel: links for mobile!) -->
+        <section class="lg:col-span-5 card-surface rounded-xl p-4 sm:p-5 flex flex-col justify-between gap-4">
+          <div class="space-y-1">
+            <h3 data-i18n="emerg_title" class="text-sm font-semibold text-[var(--foreground)]">מוקדי חירום ודיווח ימי</h3>
+            <p data-i18n="emerg_subtitle" class="text-xs text-[var(--muted-foreground)]">לחיצה מהטלפון מחייגת מיד — שמרו לפני יציאה לים</p>
+          </div>
+          <div class="space-y-2.5 text-xs">
+            <a href="tel:*3639" class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-[var(--background)] border border-[var(--border)] card-interactive">
+              <div>
+                <div data-i18n="emerg_inpa_t" class="font-semibold text-[var(--foreground)]">מוקד רשות הטבע והגנים (רט״ג)</div>
+                <div data-i18n="emerg_inpa_d" class="text-[var(--muted-foreground)]">דיווח על פגיעה בשמורה, רשתות רפאים או בע״ח פגוע</div>
+              </div>
+              <span class="font-bold text-sm tabular-nums text-[var(--primary)] shrink-0" dir="ltr">*3639</span>
+            </a>
+            <a href="tel:100" class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-[var(--background)] border border-[var(--border)] card-interactive">
+              <div>
+                <div data-i18n="emerg_pol_t" class="font-semibold text-[var(--foreground)]">שיטור ימי / חירום משטרה</div>
+                <div data-i18n="emerg_pol_d" class="text-[var(--muted-foreground)]">כלי שיט מסוכנים באזור צוללים או אירוע מצוקה בים</div>
+              </div>
+              <span class="font-bold text-sm tabular-nums shrink-0" style="color: var(--error);" dir="ltr">100</span>
+            </a>
+            <a href="tel:101" class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-[var(--background)] border border-[var(--border)] card-interactive">
+              <div>
+                <div data-i18n="emerg_mda_t" class="font-semibold text-[var(--foreground)]">מד״א (חירום רפואי / טביעה / SWB)</div>
+                <div data-i18n="emerg_mda_d" class="text-[var(--muted-foreground)]">הזעקת צוותי הצלה מיד בכל אירוע אובדן הכרה במים</div>
+              </div>
+              <span class="font-bold text-sm tabular-nums shrink-0" style="color: var(--error);" dir="ltr">101</span>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Community Safety Incidents Feed -->
+      <section class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 data-i18n="saf_feed_title" class="text-sm font-bold text-[var(--foreground)]">דיווחי תקריות ומפגעי בטיחות מהקהילה</h3>
+            <p data-i18n="saf_feed_sub" class="text-xs text-[var(--muted-foreground)]">שתפו כמעט-תאונות, רשתות נטושות, כלי שיט מסוכנים או זרמים חריגים (אפשר גם באנונימיות)</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="filter-safety-region" onchange="renderSafetyTab()" class="rounded-lg px-3 py-1.5 text-xs">
+              <option value="all">כל האזורים</option>
+            </select>
+            <select id="filter-safety-category" onchange="renderSafetyTab()" class="rounded-lg px-3 py-1.5 text-xs">
+              <option value="all" data-i18n="saf_cat_all">כל סוגי התקריות</option>
+              <option value="כלי שיט ואופנועי ים" data-i18n="saf_cat_boats">כלי שיט ואופנועי ים</option>
+              <option value="רשתות רפאים / חוטים" data-i18n="saf_cat_nets">רשתות רפאים / חוטים</option>
+              <option value="זרם חריג / סחף" data-i18n="saf_cat_curr">זרם חריג / סחף</option>
+              <option value="אירוע צלילה / SWB" data-i18n="saf_cat_swb">אירוע צלילה / SWB</option>
+              <option value="מפגע תת-ימי / בע״ח" data-i18n="saf_cat_haz">מפגע תת-ימי / בע״ח</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="safety-feed-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- Official INPA Minimum Legal Fish Sizes Table -->
+      <section id="min-sizes-section" class="card-surface rounded-xl p-4 sm:p-5 space-y-4">
+        <div class="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border)] pb-3.5">
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 data-i18n="sizes_title" class="text-sm font-bold text-[var(--foreground)]">טבלת אורכי מינימום לדגי הים התיכון (תקנות הדיג · רט״ג)</h3>
+              <a href="https://www.parks.org.il/article/fish-length/" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-[var(--link)] hover:underline inline-flex items-center gap-1">
+                <span data-i18n="sizes_official_link">הטבלה הרשמית ברט״ג</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <p data-i18n="sizes_subtitle" class="text-xs text-[var(--muted-foreground)]">הדג נמדד בשכיבה מקצה פיו עד קצה זנבו. מינים מוגנים (כולל דקר אלכסנדרוני) אסורים בדיג לחלוטין בכל גודל.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button data-i18n="sizes_hafash_btn" onclick="switchTab('fish')" class="px-3 py-1.5 rounded-lg text-xs font-semibold status-pill-nogo hover:opacity-90 transition-opacity">
+              איך מבדילים חפאש מלוקוס? (תמונות) ←
+            </button>
+            <input id="fish-size-search" data-i18n-ph="sizes_search_ph" type="search" oninput="renderFishMinSizesTable()" placeholder="חפש דג (למשל: לוקוס, דניס, סרגוס)..." class="rounded-lg px-3 py-1.5 text-xs w-56 max-w-full" />
+            <select id="fish-size-filter" onchange="renderFishMinSizesTable()" class="rounded-lg px-3 py-1.5 text-xs">
+              <option value="all" data-i18n="sizes_f_all">כל הגדלים</option>
+              <option value="protected" data-i18n="sizes_f_prot">אסור בדיג / מוגן</option>
+              <option value="large" data-i18n="sizes_f_lg">40–70 ס״מ ומעלה</option>
+              <option value="medium" data-i18n="sizes_f_md">20–30 ס״מ</option>
+              <option value="small" data-i18n="sizes_f_sm">11–15 ס״מ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto custom-scroll">
+          <table class="dir-table w-full border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                <th data-i18n="sizes_th_species" class="py-2.5 px-3 font-medium">מין הדג (עברית / כינוי)</th>
+                <th data-i18n="sizes_th_sci" class="py-2.5 px-3 font-medium hidden sm:table-cell">שם מדעי</th>
+                <th data-i18n="sizes_th_min" class="py-2.5 px-3 font-medium">אורך מינימום חוקי</th>
+                <th data-i18n="sizes_th_scale" class="py-2.5 px-3 font-medium hidden md:table-cell">השוואת גודל</th>
+                <th data-i18n="sizes_th_note" class="py-2.5 px-3 font-medium">הערה לצולל</th>
+              </tr>
+            </thead>
+            <tbody id="fish-min-sizes-tbody" class="divide-y divide-[var(--border)]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 5: MEDITERRANEAN FISH PHOTO GUIDE & HAFASH COMPARISON ==================== -->
+    <div id="view-fish" class="hidden space-y-6">
+
+      <!-- SECTION A: CRITICAL LEGAL WARNING — HAFASH (PROHIBITED) VS LEGAL GROUPERS -->
+      <section aria-label="איסור דיג חפאש והשוואה מול שאר הלוקוסים" class="rounded-xl p-4 sm:p-5 space-y-5 border-2" style="background-color: color-mix(in srgb, var(--error) 5%, var(--card)); border-color: color-mix(in srgb, var(--error) 45%, var(--border));">
+
+        <!-- Prominent Ban Banner -->
+        <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-4 border-b pb-4" style="border-color: color-mix(in srgb, var(--error) 25%, var(--border));">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5" style="background-color: color-mix(in srgb, var(--error) 16%, transparent); color: var(--error); border: 1px solid color-mix(in srgb, var(--error) 35%, transparent);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span data-i18n="hafash_pill" class="text-xs font-bold px-2.5 py-0.5 rounded-full status-pill-nogo">אסור בדיג לחלוטין · ערך טבע מוגן (מאפריל 2021)</span>
+                <span data-i18n="hafash_family" class="text-xs font-medium text-[var(--muted-foreground)]">משפחת הדקריים (Serranidae)</span>
+              </div>
+              <h2 data-i18n="hafash_title" class="text-base sm:text-lg font-bold text-[var(--foreground)]">חפאש (דקר אלכסנדרוני) מול שאר הלוקוסים המותרים — איך מזהים מתחת למים?</h2>
+              <p data-i18n-html="hafash_desc" class="text-xs text-[var(--muted-foreground)] leading-relaxed max-w-4xl">
+                <strong class="text-[var(--foreground)]">דקר אלכסנדרוני (חפאש / חפש — <span dir="ltr" class="italic">Epinephelus costae</span>)</strong> הוכרז כערך טבע מוגן בישראל עקב ירידה חדה באוכלוסייתו, ו<strong style="color: var(--error);">אסור לתפוס אותו בכל גודל, בכל עונה ובכל שיטה</strong> (עבירה פלילית הגוררת קנס כבד והחרמת ציוד). מכיוון שהוא דומה במבט ראשון ללוקוסים המותרים בדיג (מעל 40 ס״מ), יש להכיר היטב את סימני הזיהוי לפני הירי. <strong class="text-[var(--foreground)]">כלל ברזל: יש ספק — לא יורים!</strong>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <a href="https://www.parks.org.il/article/%D7%9E%D7%A9%D7%A4%D7%97%D7%AA-%D7%94%D7%93%D7%A7%D7%A8%D7%99%D7%99%D7%9D-serranidae/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors inline-flex items-center gap-1.5">
+              <span data-i18n="hafash_inpa_btn">מדריך הדקריים ברט״ג</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <button data-i18n="banner_btn_sizes" onclick="jumpToMinSizes()" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] transition-colors">
+              טבלת אורכי מינימום
+            </button>
+          </div>
+        </div>
+
+        <!-- 4-Card Side-by-Side Visual Grouper Comparison -->
+        <div id="grouper-comparison-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <!-- Populated dynamically with photos & visual checklists -->
+        </div>
+
+        <!-- Quick-Scan Difference Matrix Table -->
+        <div class="card-surface rounded-xl p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 data-i18n="gdiff_title" class="text-sm font-bold text-[var(--foreground)]">טבלת השוואה מהירה — ההבדלים המרכזיים בין חפאש ללוקוסים המותרים</h3>
+            <span data-i18n="gdiff_hint" class="text-xs text-[var(--muted-foreground)]">הקליק על כל תמונה להגדלה</span>
+          </div>
+          <div class="overflow-x-auto custom-scroll">
+            <table class="dir-table w-full border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                  <th data-i18n="gdiff_th_species" class="py-2.5 px-3 font-medium">מין הלוקוס</th>
+                  <th data-i18n="gdiff_th_status" class="py-2.5 px-3 font-medium">סטטוס חוקי</th>
+                  <th data-i18n="gdiff_th_mark" class="py-2.5 px-3 font-medium">סימן היכר חד-משמעי</th>
+                  <th data-i18n="gdiff_th_tail" class="py-2.5 px-3 font-medium">צורת סנפיר הזנב</th>
+                  <th data-i18n="gdiff_th_body" class="py-2.5 px-3 font-medium">מבנה גוף וצבע</th>
+                  <th data-i18n="gdiff_th_hab" class="py-2.5 px-3 font-medium">איפה פוגשים אותו?</th>
+                </tr>
+              </thead>
+              <tbody id="grouper-diff-tbody" class="divide-y divide-[var(--border)]">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION B: MEDITERRANEAN COMMON FISH PHOTO TABLE & GUIDE -->
+      <section aria-label="מגדיר תמונות לדגים נפוצים בים התיכון" class="card-surface rounded-xl p-4 sm:p-5 space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-[var(--border)] pb-4">
+          <div class="space-y-1">
+            <h2 data-i18n="fguide_title" class="text-base font-bold text-[var(--foreground)]">טבלת תמונות — דגים נפוצים בים התיכון בישראל</h2>
+            <p data-i18n="fguide_subtitle" class="text-xs text-[var(--muted-foreground)]">ראית דג מתחת למים ולא בטוח מה זה? חפש לפי שם, כינוי, צבע או סימן זיהוי — כולל דגים מוגנים ומינים פולשים ארסיים.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <input id="fish-guide-search" data-i18n-ph="fguide_search_ph" type="search" oninput="renderFishGuide()" placeholder="חפש דג (למשל: פסים, צהוב, זהרון, סרגוס, זנב)..." class="rounded-lg px-3 py-1.5 text-xs w-64 max-w-full" />
+            <div class="flex items-center p-0.5 rounded-lg bg-[var(--sidebar)] border border-[var(--border)]" role="group" aria-label="מצב תצוגה">
+              <button id="btn-fish-view-table" data-i18n="fguide_btn_table" type="button" onclick="setFishViewMode('table')" class="px-2.5 py-1 rounded-md text-xs font-medium transition-colors">טבלת תמונות</button>
+              <button id="btn-fish-view-cards" data-i18n="fguide_btn_cards" type="button" onclick="setFishViewMode('cards')" class="px-2.5 py-1 rounded-md text-xs font-medium transition-colors">כרטיסיות</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Filter Chips -->
+        <div id="fish-category-chips" class="flex flex-wrap items-center gap-2">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Photo Table View (Default) -->
+        <div id="fish-guide-table-wrap" class="overflow-x-auto custom-scroll">
+          <table class="dir-table w-full border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                <th data-i18n="fguide_th_photo" class="py-2.5 px-3 font-medium w-40">תמונה</th>
+                <th data-i18n="fguide_th_name" class="py-2.5 px-3 font-medium">שם הדג וכינוי</th>
+                <th data-i18n="fguide_th_status" class="py-2.5 px-3 font-medium">סטטוס / אורך מינימום</th>
+                <th data-i18n="fguide_th_depth" class="py-2.5 px-3 font-medium hidden md:table-cell">עומק ובית גידול</th>
+                <th data-i18n="fguide_th_id" class="py-2.5 px-3 font-medium">איך מזהים מתחת למים?</th>
+              </tr>
+            </thead>
+            <tbody id="fish-guide-tbody" class="divide-y divide-[var(--border)]">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Photo Cards Grid View (Alternate Toggle) -->
+        <div id="fish-guide-cards-wrap" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ==================== MODAL: NEW LIVE FIELD REPORT ==================== -->
+  <div id="report-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="report-modal-title">
+    <div class="card-surface rounded-t-2xl sm:rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto custom-scroll p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
+        <div>
+          <h3 id="report-modal-title" data-i18n="m_rep_title" class="text-base font-bold text-[var(--foreground)]">דיווח חדש בלייב מהמים</h3>
+          <p data-i18n="m_rep_sub" class="text-xs text-[var(--muted-foreground)]">יצאת מהצלילה? עזור לקהילה לדעת מה הראות והתנאים בפועל</p>
+        </div>
+        <button onclick="closeModal('report-modal')" aria-label="סגור" class="p-1.5 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)]">✕</button>
+      </div>
+
+      <form id="report-form" onsubmit="submitReport(event)" class="space-y-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_rep_author" class="text-[var(--muted-foreground)]">שם / כינוי צולל</span>
+            <input id="rep-author" data-i18n-ph="m_rep_author_ph" type="text" required placeholder="למשל: איתי כ." class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_region" class="text-[var(--muted-foreground)]">אזור</span>
+            <select id="rep-region" required onchange="populateSpotSuggestions('rep-region', 'rep-spot')" class="w-full rounded-lg px-3 py-2 text-xs"></select>
+          </label>
+        </div>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_rep_spot" class="text-[var(--muted-foreground)]">נקודת צלילה / ריף</span>
+          <input id="rep-spot" type="text" required placeholder="למשל: שקמונה ריף עמוק" class="w-full rounded-lg px-3 py-2 text-xs" />
+        </label>
+
+        <div class="space-y-1.5 text-xs">
+          <div class="flex items-center justify-between">
+            <span data-i18n="m_rep_vis" class="text-[var(--muted-foreground)]">ראות בפועל מתחת למים</span>
+            <span id="rep-vis-display" class="font-bold text-[var(--foreground)] tabular-nums">9 מטרים</span>
+          </div>
+          <input id="rep-vis" type="range" min="1" max="20" value="9" oninput="updateRepVisDisplay(this.value)" class="w-full accent-[var(--primary)]" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_rep_curr" class="text-[var(--muted-foreground)]">זרם</span>
+            <select id="rep-current" class="w-full rounded-lg px-2.5 py-2 text-xs">
+              <option value="חלש / כמעט ללא זרם" data-i18n="opt_curr_weak">חלש / ללא</option>
+              <option value="בינוני מדרום לצפון" data-i18n="opt_curr_sn">בינוני ד'-צ'</option>
+              <option value="בינוני מצפון לדרום" data-i18n="opt_curr_ns">בינוני צ'-ד'</option>
+              <option value="חזק — זהירות" data-i18n="opt_curr_strong">חזק — זהירות</option>
+            </select>
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_rep_entry" class="text-[var(--muted-foreground)]">כניסה מהחוף</span>
+            <select id="rep-entry" class="w-full rounded-lg px-2.5 py-2 text-xs">
+              <option value="כניסה חלקה" data-i18n="opt_entry_smooth">כניסה חלקה</option>
+              <option value="גלי חוף קלים" data-i18n="opt_entry_light">גלי חוף קלים</option>
+              <option value="סוער / מאתגר" data-i18n="opt_entry_rough">סוער / מאתגר</option>
+            </select>
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_rep_jelly" class="text-[var(--muted-foreground)]">מדוזות</span>
+            <select id="rep-jelly" class="w-full rounded-lg px-2.5 py-2 text-xs">
+              <option value="נקי ממדוזות" data-i18n="opt_jelly_none">נקי ממדוזות</option>
+              <option value="בודדות בעומק" data-i18n="opt_jelly_few">בודדות בעומק</option>
+              <option value="עומס מדוזות" data-i18n="opt_jelly_heavy">עומס מדוזות</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_rep_notes" class="text-[var(--muted-foreground)]">תצפיות מהמים (תנועת דגים, תרמוקלינה, הערות)</span>
+          <textarea id="rep-notes" data-i18n-ph="m_rep_notes_ph" rows="3" required placeholder="למשל: מים צלולים מעבר ל-8 מטר, נראו להקות סרגוסים ולוקוסים מתחת למדפים..." class="w-full rounded-lg px-3 py-2 text-xs"></textarea>
+        </label>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" data-i18n="btn_cancel" onclick="closeModal('report-modal')" class="px-3.5 py-2 rounded-lg text-xs border border-[var(--border)] text-[var(--muted-foreground)]">ביטול</button>
+          <button type="submit" data-i18n="m_rep_submit" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background-color: var(--primary); color: var(--primary-foreground);">פרסם דיווח בלייב</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: UPLOAD NEW CATCH ==================== -->
+  <div id="catch-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="catch-modal-title">
+    <div class="card-surface rounded-t-2xl sm:rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto custom-scroll p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
+        <div>
+          <h3 id="catch-modal-title" data-i18n="m_cat_title" class="text-base font-bold text-[var(--foreground)]">העלאת תפיסה ליומן הקהילה</h3>
+          <p data-i18n="m_cat_sub" class="text-xs text-[var(--muted-foreground)]">שתף תמונה, סוג דג, משקל, עומק וטיפ מהצלילה</p>
+        </div>
+        <button onclick="closeModal('catch-modal')" aria-label="סגור" class="p-1.5 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)]">✕</button>
+      </div>
+
+      <form id="catch-form" onsubmit="submitCatch(event)" class="space-y-3.5">
+        <!-- Photo Upload Zone -->
+        <div class="space-y-1.5">
+          <span data-i18n="m_cat_photo_lbl" class="text-xs text-[var(--muted-foreground)]">תמונת התפיסה (אופציונלי — מוצג איור מקצועי אם לא הועלתה)</span>
+          <label for="catch-photo-input" class="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-[var(--border)] p-4 cursor-pointer hover:border-[var(--primary)] transition-colors bg-[var(--background)]">
+            <img id="catch-photo-preview" alt="תצוגה מקדימה" class="hidden max-h-40 rounded-md object-cover" />
+            <div id="catch-photo-placeholder" class="text-center space-y-1">
+              <div data-i18n="m_cat_photo_cta" class="text-xs font-medium text-[var(--foreground)]">לחץ לבחירת תמונה מהמכשיר</div>
+              <div class="text-xs text-[var(--muted-foreground)]">JPG / PNG / WebP</div>
+            </div>
+            <input id="catch-photo-input" type="file" accept="image/*" class="hidden" onchange="handleCatchPhoto(event)" />
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_author" class="text-[var(--muted-foreground)]">שם הצולל</span>
+            <input id="catch-author" data-i18n-ph="m_cat_author_ph" type="text" required placeholder="למשל: דניאל מ." class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_species" class="text-[var(--muted-foreground)]">סוג הדג</span>
+            <select id="catch-species" required class="w-full rounded-lg px-3 py-2 text-xs">
+              <option value="לוקוס לבן">לוקוס לבן (White Grouper)</option>
+              <option value="אינטיאס">אינטיאס (Amberjack)</option>
+              <option value="דניס">דניס (Sea Bream)</option>
+              <option value="סרגוס">סרגוס (Sargo)</option>
+              <option value="לברק">לברק (Sea Bass)</option>
+              <option value="פלמידה לבנה">פלמידה לבנה (Bonito)</option>
+              <option value="מוסר">מוסר (Meagre)</option>
+              <option value="בורי">בורי (Grey Mullet)</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_weight" class="text-[var(--muted-foreground)]">משקל (ק"ג)</span>
+            <input id="catch-weight" type="number" step="0.1" min="0.2" max="60" required value="2.4" class="w-full rounded-lg px-3 py-2 text-xs tabular-nums" />
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_depth" class="text-[var(--muted-foreground)]">עומק (מ')</span>
+            <input id="catch-depth" type="number" step="1" min="1" max="45" required value="10" class="w-full rounded-lg px-3 py-2 text-xs tabular-nums" />
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_region" class="text-[var(--muted-foreground)]">אזור</span>
+            <select id="catch-region" required class="w-full rounded-lg px-2.5 py-2 text-xs"></select>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_spot" class="text-[var(--muted-foreground)]">נקודה / ריף</span>
+            <input id="catch-spot" data-i18n-ph="m_cat_spot_ph" type="text" required placeholder="למשל: ריף עתלית" class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_cat_gear" class="text-[var(--muted-foreground)]">ציוד / רובה</span>
+            <input id="catch-gear" data-i18n-ph="m_cat_gear_ph" type="text" placeholder="למשל: רולר 95 ס״מ" value="רובה גומיות 95 ס״מ" class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+        </div>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_cat_notes" class="text-[var(--muted-foreground)]">סיפור התפיסה / טכניקה</span>
+          <textarea id="catch-notes" data-i18n-ph="m_cat_notes_ph" rows="2" required placeholder="למשל: מארב שקט (אספקט) ליד סלע כורכר בשעת זריחה..." class="w-full rounded-lg px-3 py-2 text-xs"></textarea>
+        </label>
+
+        <div data-i18n="m_cat_ethics" class="rounded-lg px-3 py-2 text-xs bg-[var(--background)] border border-[var(--border)] text-[var(--muted-foreground)]">
+          דייג סלקטיבי ואחראי: הקפידו על גדלי מינימום, עונות רבייה ואיסור דייג בשמורות טבע ימיות.
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-1">
+          <button type="button" data-i18n="btn_cancel" onclick="closeModal('catch-modal')" class="px-3.5 py-2 rounded-lg text-xs border border-[var(--border)] text-[var(--muted-foreground)]">ביטול</button>
+          <button type="submit" data-i18n="m_cat_submit" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background-color: var(--primary); color: var(--primary-foreground);">העלה תפיסה</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: REPORT SAFETY INCIDENT / HAZARD ==================== -->
+  <div id="safety-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="safety-modal-title">
+    <div class="card-surface rounded-t-2xl sm:rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto custom-scroll p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
+        <div>
+          <h3 id="safety-modal-title" data-i18n="m_saf_title" class="text-base font-bold text-[var(--foreground)]">דיווח על תקרית או מפגע בטיחותי</h3>
+          <p data-i18n="m_saf_sub" class="text-xs text-[var(--muted-foreground)]">שיתוף אזהרה או כמעט-תאונה יכול להציל חיים של צוללים אחרים</p>
+        </div>
+        <button onclick="closeModal('safety-modal')" aria-label="סגור" class="p-1.5 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)]">✕</button>
+      </div>
+
+      <form id="safety-form" onsubmit="submitSafetyIncident(event)" class="space-y-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_saf_cat" class="text-[var(--muted-foreground)]">סוג התקרית / המפגע</span>
+            <select id="saf-category" required class="w-full rounded-lg px-3 py-2 text-xs">
+              <option value="כלי שיט ואופנועי ים" data-i18n="saf_cat_boats">כלי שיט ואופנועי ים</option>
+              <option value="רשתות רפאים / חוטים" data-i18n="saf_cat_nets">רשתות רפאים / חוטים</option>
+              <option value="זרם חריג / סחף" data-i18n="saf_cat_curr">זרם חריג / סחף</option>
+              <option value="אירוע צלילה / SWB" data-i18n="saf_cat_swb">אירוע צלילה / SWB</option>
+              <option value="מפגע תת-ימי / בע״ח" data-i18n="saf_cat_haz">מפגע תת-ימי / בע״ח</option>
+            </select>
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_saf_sev" class="text-[var(--muted-foreground)]">רמת דחיפות</span>
+            <select id="saf-severity" required class="w-full rounded-lg px-3 py-2 text-xs">
+              <option value="high" data-i18n="opt_sev_high">חמור — סכנה מיידית</option>
+              <option value="medium" data-i18n="opt_sev_med" selected>אזהרה — משנה זהירות</option>
+              <option value="info" data-i18n="opt_sev_info">לידיעה / הפקת לקחים</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_region" class="text-[var(--muted-foreground)]">אזור</span>
+            <select id="saf-region" required onchange="populateSpotSuggestions('saf-region', 'saf-spot')" class="w-full rounded-lg px-3 py-2 text-xs"></select>
+          </label>
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_saf_spot" class="text-[var(--muted-foreground)]">מיקום מדויק / עומק</span>
+            <input id="saf-spot" type="text" required placeholder="למשל: קצה הריף בעומק 9 מ׳" class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+        </div>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_saf_headline" class="text-[var(--muted-foreground)]">כותרת קצרה לאזהרה</span>
+          <input id="saf-title" data-i18n-ph="m_saf_headline_ph" type="text" required placeholder="למשל: רשת דייג נטושה פרוסה על הסלעים" class="w-full rounded-lg px-3 py-2 text-xs" />
+        </label>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_saf_desc" class="text-[var(--muted-foreground)]">תיאור המקרה</span>
+          <textarea id="saf-desc" data-i18n-ph="m_saf_desc_ph" rows="3" required placeholder="מה קרה, איפה בדיוק וממה חשוב להיזהר..." class="w-full rounded-lg px-3 py-2 text-xs"></textarea>
+        </label>
+
+        <label class="block space-y-1 text-xs">
+          <span data-i18n="m_saf_tip" class="text-[var(--muted-foreground)]">המלצת זהירות / לקח לצוללים אחרים</span>
+          <input id="saf-tip" data-i18n-ph="m_saf_tip_ph" type="text" required placeholder="למשל: להחזיק סכין צלילה זמינה ולא להתקרב לשובר ממערב" class="w-full rounded-lg px-3 py-2 text-xs" />
+        </label>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
+          <label class="block space-y-1 text-xs">
+            <span data-i18n="m_saf_author" class="text-[var(--muted-foreground)]">שם המדווח</span>
+            <input id="saf-author" data-i18n-ph="m_saf_author_ph" type="text" placeholder="למשל: אבי ד." class="w-full rounded-lg px-3 py-2 text-xs" />
+          </label>
+          <label class="flex items-center gap-2 py-2 text-xs text-[var(--muted-foreground)] cursor-pointer select-none">
+            <input id="saf-anon" type="checkbox" onchange="toggleAnonymousSafety(this.checked)" class="rounded accent-[var(--primary)]" />
+            <span data-i18n="m_saf_anon">פרסם בדיווח אנונימי (מומלץ לכמעט-תאונות)</span>
+          </label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" data-i18n="btn_cancel" onclick="closeModal('safety-modal')" class="px-3.5 py-2 rounded-lg text-xs border border-[var(--border)] text-[var(--muted-foreground)]">ביטול</button>
+          <button type="submit" data-i18n="m_saf_submit" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background-color: var(--error); color: #ffffff;">פרסם אזהרת בטיחות</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: FISH PHOTO & ID LIGHTBOX ==================== -->
+  <div id="fish-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="fish-modal-title">
+    <div class="card-surface rounded-t-2xl sm:rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scroll p-5 space-y-4 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-[var(--border)] pb-3">
+        <div class="space-y-0.5">
+          <div id="fish-modal-badges" class="flex flex-wrap items-center gap-1.5 mb-1"></div>
+          <h3 id="fish-modal-title" class="text-base font-bold text-[var(--foreground)]"></h3>
+          <p id="fish-modal-subtitle" class="text-xs text-[var(--muted-foreground)]"></p>
+        </div>
+        <button onclick="closeModal('fish-modal')" aria-label="סגור" class="p-1.5 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)]">✕</button>
+      </div>
+      <div id="fish-modal-body" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MOBILE / TABLET FIXED BOTTOM NAVIGATION BAR ==================== -->
+  <nav aria-label="ניווט מובייל" class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-[var(--border)] bg-[var(--background)]/95 backdrop-blur mobile-bottom-nav">
+    <div class="grid grid-cols-5 gap-0.5 px-1.5 py-1.5 max-w-xl mx-auto">
+      <button id="mtab-overview" type="button" onclick="switchTab('overview')" aria-selected="true" class="mnav-btn flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-lg min-h-[48px]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.2-2.2 4.8-2.2 7 0s4.8 2.2 7 0 4.2-2.2 6 0"/><path d="M2 17c2.2-2.2 4.8-2.2 7 0s4.8 2.2 7 0 4.2-2.2 6 0"/></svg>
+        <span data-i18n="mnav_overview" class="text-xs font-medium leading-none">תחזית</span>
+      </button>
+      <button id="mtab-reports" type="button" onclick="switchTab('reports')" aria-selected="false" class="mnav-btn flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-lg min-h-[48px]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span data-i18n="mnav_reports" class="text-xs font-medium leading-none">לייב</span>
+      </button>
+      <button id="mtab-catches" type="button" onclick="switchTab('catches')" aria-selected="false" class="mnav-btn flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-lg min-h-[48px]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span data-i18n="mnav_catches" class="text-xs font-medium leading-none">תפיסות</span>
+      </button>
+      <button id="mtab-safety" type="button" onclick="switchTab('safety')" aria-selected="false" class="mnav-btn relative flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-lg min-h-[48px]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <span data-i18n="mnav_safety" class="text-xs font-medium leading-none">בטיחות</span>
+      </button>
+      <button id="mtab-fish" type="button" onclick="switchTab('fish')" aria-selected="false" class="mnav-btn flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-lg min-h-[48px]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"/><path d="M18 12v.5"/><path d="M2 16s2-2 2-4-2-4-2-4"/></svg>
+        <span data-i18n="mnav_fish" class="text-xs font-medium leading-none">דגים</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Toast Notification (elevated above mobile bottom nav) -->
+  <div id="toast" class="hidden fixed bottom-20 lg:bottom-5 left-4 right-4 sm:right-auto sm:left-5 z-50 px-4 py-2.5 rounded-lg text-xs font-medium shadow-lg border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)]"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

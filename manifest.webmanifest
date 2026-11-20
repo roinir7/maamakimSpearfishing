@@ -1,0 +1,19 @@
+{
+  "name": "מעמקים — דייג בצלילה חופשית בישראל",
+  "short_name": "מעמקים",
+  "description": "תחזית גלים וראות מתחת למים, דיווחים בלייב, יומן תפיסות, בטיחות ומגדיר דגי הים התיכון לצוללים חופשיים בישראל.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#09131c",
+  "theme_color": "#09131c",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
